@@ -1,13 +1,14 @@
 const express = require('express');
 const hbs = require('hbs')
 const fs = require('fs');
+const port = process.env.PORT || 3000;
 
 let app = express();
 
-app.set('view engine', 'hbs')
+app.set('view engine', 'hbs');
 
 //__dirname refers to the root directory
-hbs.registerPartials(__dirname + '/views/partials')
+hbs.registerPartials(__dirname + '/views/partials');
 
 app.use((req, res, next) => {
   let now = new Date().toString();
@@ -16,7 +17,7 @@ app.use((req, res, next) => {
   console.log(log);
   fs.appendFile('server.log', log + "\n", (err) => {
     if (err) {
-      console.log("Unable to append server log.")
+      console.log("Unable to append server log.");
     }
   })
   next();
@@ -58,5 +59,5 @@ app.get('/bad', (req, res) => {
 })
 
 app.listen(3000, () => {
-  console.log('Server is up on port 3000.');
+  console.log(`Server is up on port ${port}.`);
 });
